@@ -1,4 +1,6 @@
 var builder = WebApplication.CreateBuilder(args);
+
+// Enable CORS to allow frontend requests
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAll",
@@ -6,9 +8,13 @@ builder.Services.AddCors(options =>
                         .AllowAnyMethod()
                         .AllowAnyHeader());
 });
+
 builder.Services.AddControllers();
 var app = builder.Build();
 
-app.UseCors("AllowAll"); // Apply CORS policy
+app.UseCors("AllowAll");  // Apply CORS policy
 app.MapControllers();
+
 app.Run();
+
+
