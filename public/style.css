@@ -1,8 +1,82 @@
+
 body {
     font-family: Arial, sans-serif;
     text-align: center;
     margin-top: 50px;
-}
+    margin: 0;
+    padding: 0;
+    background-color:#aad6fd;
+    background-image: url("images/background.png");
+    background-repeat: no-repeat;
+    background-position: 0% 100%;
+    background-attachment: fixed;
+    background-size: cover;
+    height: 100%;
+    width: 100%;
+    min-height:100px;
+  } 
+  
+  
+  #nav {
+    margin: 0px;
+    height: 25%;
+    width: 100%;
+    background-color: #fff;
+    position: absolute;
+    top: 0;
+    box-shadow: 2px 2px 5px grey;
+  }
+  
+  .title {
+    height: 100%; 
+    width: 100%;
+    padding-top: 30px;
+    font-family: 'Baron';
+  }
+  
+  h1 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3.2em;
+    letter-spacing: 11px;
+  }
+  
+  h2 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .bg-primary {
+    background-color: #1f263e;
+    color: white;
+    border: 10px solid #1f263e;
+    border-radius: 20px;
+    padding: 10px;
+    font-size: 3em;
+    padding-left: 40px;
+    padding-right: 40px;
+    margin: auto;
+    text-align: center;
+    font-family: sans-serif;
+    clear: both;
+    margin-top: 260px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 2px 2px 4px grey;
+    font-family: 'Montserrat';
+   }
+  
+  a.bg-primary:hover, a.bg-primary:focus,
+  button.bg-primary:hover,
+  button.bg-primary:focus {
+    background-color: #060a17;
+    border: 10px solid #060a17;
+  }
+  
+
 input {
     padding: 10px;
     font-size: 16px;
