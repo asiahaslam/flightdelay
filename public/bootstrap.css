@@ -1,3 +1,58 @@
+body {
+  margin: 0;
+  padding: 0;
+  background-color:#aad6fd;
+  background-image: url("images/background.png");
+  background-repeat: no-repeat;
+  background-position: 0% 100%;
+  background-attachment: fixed;
+  background-size: cover;
+  height: 100%;
+  width: 100%;
+  min-height:677px;
+}
+
+@font-face {
+  font-family: 'Baron';
+  src: url('fonts/Baron Neue.otf') format('otf'),
+       url('fonts/Baron Neue Black.otf') format('otf');
+  font-weight: normal;
+  font-style: normal;
+}
+
+#nav {
+  margin: 0px;
+  height: 120px;
+  width: 100%;
+  background-color: #fff;
+
+}
+
+
+.bg-primary {
+  background-color: #1f263e;
+  color: white;
+  border: 10px solid #1f263e;
+  border-radius: 70px;
+  padding: 10px;
+  font-size: 2.3em;
+  padding-left: 30px;
+  padding-right: 30px;
+  margin: auto;
+  text-align: center;
+  font-family: "Baron";
+ }
+
+a.bg-primary:hover, a.bg-primary:focus,
+button.bg-primary:hover,
+button.bg-primary:focus {
+  background-color: #060a17;
+  border: 10px solid #060a17;
+  border-radius: 70px;
+}
+
+
+
 :root {
   --blue: #007bff;
   --indigo: #6610f2;
@@ -210,11 +265,11 @@ select {
 select {
   word-wrap: normal; }
 
-button,
+/*button,
 [type="button"],
 [type="reset"],
 [type="submit"] {
-  -webkit-appearance: button; }
+  -webkit-appearance: button; }*/
 
 button:not(:disabled),
 [type="button"]:not(:disabled),
@@ -264,7 +319,7 @@ progress {
 
 [type="search"] {
   outline-offset: -2px;
-  -webkit-appearance: none; }
+  /*-webkit-appearance: none; */}
 
 [type="search"]::-webkit-search-decoration {
   -webkit-appearance: none; }
@@ -4679,13 +4734,6 @@ a.close.disabled {
 .align-text-top {
   vertical-align: text-top !important; }
 
-.bg-primary {
-  background-color: #007bff !important; }
-
-a.bg-primary:hover, a.bg-primary:focus,
-button.bg-primary:hover,
-button.bg-primary:focus {
-  background-color: #0062cc !important; }
 
 .bg-secondary {
   background-color: #6c757d !important; }
