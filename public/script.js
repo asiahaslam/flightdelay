@@ -43,7 +43,7 @@ class Flight {
     }
 }
 
-function sendToBackend() {
+/* function sendToBackend() {
     const inputText = document.getElementById("userInput").value;
 
     // Ensure the input is not empty
@@ -64,7 +64,7 @@ function sendToBackend() {
         document.getElementById("output").innerText = data.findAirline;
     })
     .catch(error => console.error("Error:", error));
-}
+} */
 
 function calculate(flight) {
     var percentage = 0.0;
@@ -97,9 +97,10 @@ async function getFlightByNumber(flightNumber) {
             return;
         }
 
-        var currentFlight = new Flight(flight.flight.number, flight.airline.name, flight.departure.airport, flight.arrival.airport, flight.flight.date, flight.flight_status);
-        
         var flight = data.data[0];
+
+        var currentFlight = new Flight(flight.flight.number, flight.airline.name, flight.departure.airport, flight.arrival.airport, flight.flight.date, flight.flight_status);
+
         document.getElementById("flightInfo").innerHTML = `
             <p><strong>Flight:</strong> ${flight.flight.number} (${flight.airline.name})</p>
             <p><strong>From:</strong> ${flight.departure.airport} (${flight.departure.iata})</p>
@@ -109,13 +110,12 @@ async function getFlightByNumber(flightNumber) {
             <p><strong>From:</strong> ${flight.departure.scheduled} (${flight.departure.scheduled})</p>
             <p><strong>To:</strong> ${flight.arrival.delay} (${flight.arrival.delay})</p>
             <p><strong>Status:</strong> ${flight.flight_status}</p>
-            <p><strong>Risk of delay:</strong> ${calculate(flight)}</p>
+            <p><strong>Risk of delay:</strong> ${calculate(currentFlight)}</p>
         `;
     } catch (error) {
         console.error("Error fetching flight data:", error);
     }
 }
-
 
 
 function searchFlight() {
