@@ -36,13 +36,50 @@ class Flight {
 }
 
 function updateLists() {
-    airports.push(new Airport("Sofia", 0.5));
-    airports.push(new Airport("Varna", 0.6));
-    airports.push(new Airport("Burgas", 0.3));
-    
-    airlines.push(new Airline("WizzAir", 0.9));
-    airlines.push(new Airline("RyanAir", 0.7));
-    airlines.push(new Airline("Lufthansa", 0.1));
+    airports.push(new Airport("Sofia", 0.96));
+    airports.push(new Airport("Athens", 0.60));
+    airports.push(new Airport("Bucharest", 0.5771));
+
+    airlines.push(new Airline("AEGAN AIRLINES", 0.67));
+    airlines.push(new Airline("AIR BALTIC", 0.72));
+    airlines.push(new Airline("AIR SERBIA", 0.59));
+    airlines.push(new Airline("AKRIA ISRAELI INLAND AIRLINES", 0.66));
+    airlines.push(new Airline("AUSTRIAN AIRLINES", 0.75));
+    airlines.push(new Airline("AVANTI AIR", 0.84));
+    airlines.push(new Airline("BH AIR", 0.84));
+    airlines.push(new Airline("BRITISH AIRWAYS", 0.77));
+    airlines.push(new Airline("BUL AIR", 0.73));
+    airlines.push(new Airline("BULGARIA AIR", 0.70));
+    airlines.push(new Airline("CORENDON AIRLINES", 0.70));
+    airlines.push(new Airline("DEUTSCHE LUFTHANSA", 0.69));
+    airlines.push(new Airline("EASY JET EUROPE GMBH", 0.68));
+    airlines.push(new Airline("EASYJET AIRLINE", 0.65));
+    airlines.push(new Airline("EL AL - ISRAEL AIRLINES", 0.77));
+    airlines.push(new Airline("ENTER AIR", 0.68));
+    airlines.push(new Airline("EUROPEAN AIR CHARTER", 0.65));
+    airlines.push(new Airline("FLYDUBAI", 0.77));
+    airlines.push(new Airline("FREEBIRD AIRLINES", 0.68));
+    airlines.push(new Airline("FROST AIR", 0.764));
+    airlines.push(new Airline("LUFTHANSA", 0.73));
+    airlines.push(new Airline("GRANAVI", 0.70));
+    airlines.push(new Airline("ISRAIR AIRLINES", 0.86));
+    airlines.push(new Airline("ALITALIA", 0.677));
+    airlines.push(new Airline("LOT", 0.70));
+    airlines.push(new Airline("NEOS S.P.A", 0.68));
+    airlines.push(new Airline("NESMA AIRLINES", 0.722));
+    airlines.push(new Airline("NORWEGIAN AIR", 0.79));
+    airlines.push(new Airline("PEGASSUS AIRLINES", 0.80));
+    airlines.push(new Airline("QATAR AIRWAYS", 0.89));
+    airlines.push(new Airline("RYANAIR", 0.84));
+    airlines.push(new Airline("SKY EXPRESS", 0.78));
+    airlines.push(new Airline("SUNDAIR", 0.69));
+    airlines.push(new Airline("SUN EXPRESS", 0.66));
+    airlines.push(new Airline("SWISS INTERNATIONAL AIRLINES", 0.6322));
+    airlines.push(new Airline("TAROM - ROMANIAN AIR TRANSPORT", 0.70));
+    airlines.push(new Airline("TRANSAVIA", 0.6466));
+    airlines.push(new Airline("TURKISH AIRLINES", 0.71));
+    airlines.push(new Airline("TUS AIRWAYS", 0.723));
+    airlines.push(new Airline("WIZZ AIR", 0.6381));
     
     weather.push(new Weather("Rain", 0.2));
     weather.push(new Weather("Snow", 0.4));
@@ -66,7 +103,7 @@ function calculate() {
         if (item.type === "Rain") weatherDelay = 0.2;  
     });
 
-    let percentage = (0.4 * airlineDelay) + (0.4 * airportDelay) + (0.2 * weatherDelay);
+    let percentage = (0.90 * airlineDelay) + (0.5 * airportDelay) + (0.5 * weatherDelay);
     return (percentage * 100).toFixed(2) + "% chance of delay";
 }
 
@@ -89,12 +126,14 @@ async function getFlightByNumber(flightNumber) {
 
         currentFlight = new Flight(
             flight.flight.iata, 
-            flight.airline.name, 
+            flight.airline.name.toUpperCase(), 
             flight.departure.airport, 
             flight.arrival.airport, 
             flight.flight_date, 
             flight.flight_status
         );
+
+        console.log(currentFlight.airlineName);
 
         document.getElementById("flightInfo").innerHTML = `
             <p><strong>Flight:</strong> ${flight.flight.iata} (${flight.airline.name})</p>
