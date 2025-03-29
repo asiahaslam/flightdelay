@@ -11,7 +11,7 @@
 <body>
     <div>
         <div id="nav"> 
-            <image style = "float: left;" src="images/flight.png" height="95%" />
+            <image style = "float: left;" src="images/flight.png" alt = "Logo" height="95%" />
             <div class = "title">
                 <h1 style = "text-transform: uppercase;">Flight on time</h1>
                 <h2> Aaaaaaaagh</h2>
@@ -19,22 +19,21 @@
         </div>
         <p></p>
 
-        <div style = "width: 100%;">
+        <div style = "width: 100%; visibility: hidden;">
             <button class="bg-primary">START</button>
         </div>
 
-        <div style = "text-align: center; visibility: hidden;">
-
-            <h1>Flight Lookup</h1>
-            <input type="text" id="flightNumber" placeholder="Enter flight number (e.g., AA100)">
-            <button onclick="searchFlight()">Search</button>
-            <div id="flightInfo"></div>
-
-
+        <div id = "searchbar" >
+            <div id = "bar" >
+                <input type="text" id="flightNumber" placeholder="Input your flight number (e.g., AA100)">
+                <button onclick="searchFlight()" id = "searchbutton" style = "background-color: transparent;">
+                    <img id = "searchicon" src = "images/searchicon.png" height = 40px; style = "background-color: transparent;"/>
+                </button>
+                <div id="flightInfo"></div>
+            </div>
             <script src="script.js"></script>
         </div>
+
     </div> 
-
-
 </body>
 </html>

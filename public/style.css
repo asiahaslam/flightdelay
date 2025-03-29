@@ -1,7 +1,6 @@
 
 body {
     font-family: Arial, sans-serif;
-    text-align: center;
     margin-top: 50px;
     margin: 0;
     padding: 0;
@@ -14,6 +13,7 @@ body {
     height: 100%;
     width: 100%;
     min-height:100px;
+    color:#1f263e;
   } 
   
   
@@ -76,18 +76,48 @@ body {
     border: 10px solid #060a17;
   }
   
+#searchbar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: -50px;
+}
+
+#bar {
+    padding: 5px;
+    border-radius: 20px;
+    width: 34%; 
+    background-color: #bfc1c2;
+}
 
 input {
-    padding: 10px;
+    padding: 14px;
     font-size: 16px;
     margin-right: 10px;
+    border: 0px;
+    border-radius: 20px;
+    width: 86%;
+    text-align: left;
 }
-button {
-    padding: 10px 20px;
+#searchbutton {
     font-size: 16px;
     cursor: pointer;
+    border: 0px;
+    width: 10%;
 }
 p {
     font-size: 18px;
     margin-top: 20px;
+}
+
+#searchicon {
+    text-decoration: none;
+    filter: invert (100%);
+    margin: 0;
+    border: 0px;
+    background-color: transparent;
+}
+
+#searchicon:hover {
+    mix-blend-mode: difference;
 }
