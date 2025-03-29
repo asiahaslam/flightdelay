@@ -2,28 +2,13 @@ var currentFlight;
 var airports = [];
 var airlines = [];
 var weather = [];
+
 class Airport {
     constructor(name, delayRate) {
         this.name = name;
         this.delayRate = delayRate;
     }
 }
-
-function updateLists() {
-    airports.push(new Airport("Sofia", .5));
-    airports.push(new Airport("Varna", .6));
-    airports.push(new Airport("Burgas", .3));
-    
-    airlines.push(new Airline("WizzAir", .9));
-    airlines.push(new Airline("RyanAir", .7));
-    airlines.push(new Airline("Lufthansa", .1));
-    
-    weather.push(new Weather("Rain", .2));
-    weather.push(new Weather("Snow", .4));
-    weather.push(new Weather("Clear", .1));
-}
-
-
 
 class Airline {
     constructor(name, delayRate) {
@@ -32,15 +17,12 @@ class Airline {
     }
 }
 
-
-
 class Weather {
     constructor(type, delayRate) {
         this.type = type;
         this.delayRate = delayRate;
     }
 }
-
 
 class Flight {
     constructor(flightNumber, airlineName, departureAirport, arrivalAirport, flightDay, currentStatus) {
@@ -53,48 +35,39 @@ class Flight {
     }
 }
 
-/* function sendToBackend() {
-    const inputText = document.getElementById("userInput").value;
+function updateLists() {
+    airports.push(new Airport("Sofia", 0.5));
+    airports.push(new Airport("Varna", 0.6));
+    airports.push(new Airport("Burgas", 0.3));
+    
+    airlines.push(new Airline("WizzAir", 0.9));
+    airlines.push(new Airline("RyanAir", 0.7));
+    airlines.push(new Airline("Lufthansa", 0.1));
+    
+    weather.push(new Weather("Rain", 0.2));
+    weather.push(new Weather("Snow", 0.4));
+    weather.push(new Weather("Clear", 0.1));
+}
 
-    // Ensure the input is not empty
-    if (!inputText.trim()) {
-        alert("Please enter a string");
-        return;
-    }
+function calculate() {
+    let airlineDelay = 0.0;
+    let airportDelay = 0.0;
+    let weatherDelay = 0.0;
 
-    fetch("http://localhost:5038/api/hello/airline", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ text: inputText })
-    })
-    .then(response => response.json())
-    .then(data => {
-        document.getElementById("output").innerText = data.findAirline;
-    })
-    .catch(error => console.error("Error:", error));
-} */
+    airlines.forEach(item => {
+        if (item.name === currentFlight.airlineName) airlineDelay = item.delayRate;
+    });
 
-function calculate(flight) {
-    var percentage = 0.0;
-    var airlineDelay = 0.0;
-    var airportDelay = 0.0;
-    var weatherDelay = 0.0;
+    airports.forEach(item => {
+        if (item.name === currentFlight.departureAirport) airportDelay = item.delayRate;
+    });
 
-    airlines.forEach(airlineCalc);
-        function airlineCalc(item) {
-            if (item == currentFlight.airlineName) airlineDelay = item.delayRate;
-        } 
+    weather.forEach(item => {
+        if (item.type === "Rain") weatherDelay = 0.2;  
+    });
 
-    airports.forEach(airportCalc);
-    function airportCalc(item) {
-        if (item == currentFlight.airport) airportDelay = item.delayRate;
-    }
-
-    percentage = .5 * airlineDelay + .5 * airportDelay;
-
-    return percentage;
+    let percentage = (0.4 * airlineDelay) + (0.4 * airportDelay) + (0.2 * weatherDelay);
+    return (percentage * 100).toFixed(2) + "% chance of delay";
 }
 
 async function getFlightByNumber(flightNumber) {
@@ -114,24 +87,29 @@ async function getFlightByNumber(flightNumber) {
 
         var flight = data.data[0];
 
-        currentFlight = new Flight(flight.flight.number, flight.airline.name, flight.departure.airport, flight.arrival.airport, flight.flight.date, flight.flight_status);
+        currentFlight = new Flight(
+            flight.flight.iata, 
+            flight.airline.name, 
+            flight.departure.airport, 
+            flight.arrival.airport, 
+            flight.flight_date, 
+            flight.flight_status
+        );
 
         document.getElementById("flightInfo").innerHTML = `
-            <p><strong>Flight:</strong> ${flight.flight.number} (${flight.airline.name})</p>
+            <p><strong>Flight:</strong> ${flight.flight.iata} (${flight.airline.name})</p>
             <p><strong>From:</strong> ${flight.departure.airport} (${flight.departure.iata})</p>
             <p><strong>To:</strong> ${flight.arrival.airport} (${flight.arrival.iata})</p>
-            <p><strong>Status:</strong> ${flight.flight_status}</p>
-            <p><strong>Flight:</strong> ${flight.flight.date} (${flight.airline.date})</p>
-            <p><strong>From:</strong> ${flight.departure.scheduled} (${flight.departure.scheduled})</p>
-            <p><strong>To:</strong> ${flight.arrival.delay} (${flight.arrival.delay})</p>
-            <p><strong>Status:</strong> ${flight.flight_status}</p>
-            <p><strong>Risk of delay:</strong> ${calculate(currentFlight)}</p>
+            <p><strong>Current:</strong> ${flight.flight_status}</p>
+            <p><strong>Flight Date:</strong> ${flight.flight_date || "N/A"}</p>
+            <p><strong>Scheduled Departure:</strong> ${flight.departure.scheduled || "N/A"}</p>
+            <p><strong>Arrival Delay:</strong> ${flight.arrival.delay || "No delay reported"}</p>
+            <p><strong>Risk of delay:</strong> ${calculate()}</p>
         `;
     } catch (error) {
         console.error("Error fetching flight data:", error);
     }
 }
-
 
 function searchFlight() {
     const flightNumber = document.getElementById("flightNumber").value.trim();
@@ -141,4 +119,3 @@ function searchFlight() {
     }
     getFlightByNumber(flightNumber);
 }
-
