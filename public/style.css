@@ -1,19 +1,123 @@
+
 body {
     font-family: Arial, sans-serif;
-    text-align: center;
     margin-top: 50px;
-}
-input {
+    margin: 0;
+    padding: 0;
+    background-color:#aad6fd;
+    background-image: url("images/background.png");
+    background-repeat: no-repeat;
+    background-position: 0% 100%;
+    background-attachment: fixed;
+    background-size: cover;
+    height: 100%;
+    width: 100%;
+    min-height:100px;
+    color:#1f263e;
+  } 
+  
+  
+  #nav {
+    margin: 0px;
+    height: 25%;
+    width: 100%;
+    background-color: #fff;
+    position: absolute;
+    top: 0;
+    box-shadow: 2px 2px 5px grey;
+  }
+  
+  .title {
+    height: 100%; 
+    width: 100%;
+    padding-top: 30px;
+    font-family: 'Baron';
+  }
+  
+  h1 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3.2em;
+    letter-spacing: 11px;
+  }
+  
+  h2 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .bg-primary {
+    background-color: #1f263e;
+    color: white;
+    border: 10px solid #1f263e;
+    border-radius: 20px;
     padding: 10px;
+    font-size: 3em;
+    padding-left: 40px;
+    padding-right: 40px;
+    margin: auto;
+    text-align: center;
+    font-family: sans-serif;
+    clear: both;
+    margin-top: 260px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 2px 2px 4px grey;
+    font-family: 'Montserrat';
+   }
+  
+  a.bg-primary:hover, a.bg-primary:focus,
+  button.bg-primary:hover,
+  button.bg-primary:focus {
+    background-color: #060a17;
+    border: 10px solid #060a17;
+  }
+  
+#searchbar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: -50px;
+}
+
+#bar {
+    padding: 5px;
+    border-radius: 20px;
+    width: 34%; 
+    background-color: #bfc1c2;
+}
+
+input {
+    padding: 14px;
     font-size: 16px;
     margin-right: 10px;
+    border: 0px;
+    border-radius: 20px;
+    width: 86%;
+    text-align: left;
 }
-button {
-    padding: 10px 20px;
+#searchbutton {
     font-size: 16px;
     cursor: pointer;
+    border: 0px;
+    width: 10%;
 }
 p {
     font-size: 18px;
     margin-top: 20px;
+}
+
+#searchicon {
+    text-decoration: none;
+    filter: invert (100%);
+    margin: 0;
+    border: 0px;
+    background-color: transparent;
+}
+
+#searchicon:hover {
+    mix-blend-mode: difference;
 }
