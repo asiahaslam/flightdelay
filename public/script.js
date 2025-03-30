@@ -129,6 +129,13 @@ function reset() {
     input.value = "";
 }
 
+function start() {
+    let start = document.getElementById("startbutton");
+    start.style.display='none';
+
+    let searchBar = document.getElementById("searchbar");
+    searchBar.style.display='flex';
+}
 /* async function getWeather(dateTime, city) {
     try {
         // Get latitude and longitude from Open-Meteo Geocoding API
