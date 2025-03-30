@@ -3796,7 +3796,7 @@ input[type="button"].btn-block {
   overflow: hidden;
   line-height: 0;
   font-size: 0.75rem;
-  background-color: #e9ecef;
+  background-color: grey;
   border-radius: 0.25rem; 
 }
 
