@@ -139,45 +139,6 @@ function start() {
     searchBar.style.display='flex';
 }
 
-/* async function getWeather(dateTime, city) {
-    try {
-        // Get latitude and longitude from Open-Meteo Geocoding API
-        const geoResponse = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${city}&count=1&format=json`);
-        const geoData = await geoResponse.json();
-
-        if (!geoData.results || geoData.results.length === 0) {
-            alert("City not found!");
-            return;
-        }
-
-        const { latitude, longitude } = geoData.results[0];
-
-        // Get weather data
-        const weatherResponse = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&hourly=temperature_2m,weather_code`);
-        const weatherData = await weatherResponse.json();
-
-        // Find the closest hour to user input
-        const hours = weatherData.hourly.time;
-        const temperatures = weatherData.hourly.temperature_2m;
-        const weatherCode = weatherData.hourly.weather_code;
-
-        let closestIndex = hours.findIndex(hour => hour.startsWith(dateTime));
-
-        if (closestIndex === -1) {
-            alert("Weather data not available for this time.");
-            return;
-        }
-
-        currentFlight.temperature = temperatures[closestIndex];
-        currentFlight.weatherCode = weatherCode[closestIndex];
-
-
-    } catch (error) {
-        console.error("Error fetching weather data:", error);
-        alert("Error fetching weather data. Try again.");
-    }
-} */
-
 
 function calculateDelay() {
     let airline = airlines.find(item => item.name === currentFlight.airlineName);
@@ -200,7 +161,7 @@ function calculateDelay() {
 async function getFlightByNumber(flightNumber) {
     updateLists();
 
-    const API_KEY = "f4da060f7bf36786afc535e0571e19c9";
+    const API_KEY = "7d667da7257b5fb5de60e0ffddb637ed";
     const url = `http://api.aviationstack.com/v1/flights?access_key=${API_KEY}&flight_iata=${flightNumber}`;
 
     try {
@@ -284,7 +245,6 @@ async function getFlightByNumber(flightNumber) {
             ${delays}
         `;
         
-
     } catch (error) {
         console.error("Error fetching flight data:", error);
     }
