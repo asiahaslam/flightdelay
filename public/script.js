@@ -119,6 +119,8 @@ function getWeather() {
 }
 
 function reset() {
+    window.location.reload();
+
     let userData = document.getElementById("userdata");
     userData.style.display='none';
 
@@ -225,6 +227,7 @@ async function getFlightByNumber(flightNumber) {
         );
 
         let delay = calculateDelay();
+        let delay100 = delay * 100;
         let delayPercent = (delay * 100).toFixed(0) + "%";
         let delayRisk = "Low";
         let color = "success";
@@ -280,10 +283,7 @@ async function getFlightByNumber(flightNumber) {
             <h4>Your flight from ${currentFlight.departureAirport} to ${currentFlight.arrivalAirport} has a ${delayPercent} chance of delay${delayInfo}</h4>
             ${delays}
         `;
-
-        document.getElementsByClassName("progress").innerHTML = `
-            <div class="progress-bar bg-${color}" role="progressbar" style="width: ${delayPercent}" aria-valuenow="${delay * 100}" aria-valuemin="0" aria-valuemax="100"></div>
-        `;
+        
 
     } catch (error) {
         console.error("Error fetching flight data:", error);
