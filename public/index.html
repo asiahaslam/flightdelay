@@ -26,11 +26,10 @@
 
         <div id = "searchbar">
             <div id = "bar" >
-                <input type="text" id="flightNumber" placeholder="Input your flight number (e.g., AA100)">
+                <input type="text" id="flightNumber" placeholder="What is your flight number? (e.g. AA100)">
                 <button onclick="searchFlight()" id = "searchbutton" style = "background-color: transparent;">
                     <img id = "searchicon" src = "images/searchicon.png" height = 40px; style = "background-color: transparent;"/>
                 </button>
-                <div id="flightInfo"></div>
             </div>
             <script src="script.js"></script>
         </div>
@@ -46,7 +45,7 @@
                 <div id = "flight-info"></div>
             </div>
 
-            <button id = "redobutton">
+            <button id = "redobutton" onclick="reset()">
                 RETRY?
             </button>
         </div>

@@ -4,6 +4,11 @@ var airlines = [];
 var weather = [];
 var months = [];
 
+var airlineDelay = 0.0;
+var airportDelay = 0.0;
+var weatherDelay = 0.0;
+var monthDelay = 0.0;
+
 class Airport {
     constructor(name, delayRate) {
         this.name = name;
@@ -113,6 +118,17 @@ function getWeather() {
     return Math.random();
 }
 
+function reset() {
+    let userData = document.getElementById("userdata");
+    userData.style.display='none';
+
+    let searchBar = document.getElementById("searchbar");
+    searchBar.style.display='flex';
+
+    let input = document.getElementById("flightNumber");
+    input.value = "";
+}
+
 /* async function getWeather(dateTime, city) {
     try {
         // Get latitude and longitude from Open-Meteo Geocoding API
@@ -154,11 +170,6 @@ function getWeather() {
 
 
 function calculateDelay() {
-    let airlineDelay = 0.0;
-    let airportDelay = 0.0;
-    let weatherDelay = 0.0;
-    let monthDelay = 0.0;
-
     let airline = airlines.find(item => item.name === currentFlight.airlineName);
     airlineDelay = airline ? 1 - airline.delayRate : 0.0;
 
@@ -205,25 +216,34 @@ async function getFlightByNumber(flightNumber) {
             month
         );
 
+        let delay = calculateDelay();
+
         console.log(currentFlight);
 
         let searchBar = document.getElementById("searchbar");
         searchBar.style.display='none';
 
         let userData = document.getElementById("userdata");
-        userData.style.display='inherit';
+        userData.style.display='flex';
+
+        let background = document.getElementById("background");
+        background.id = 'background-lower';
+
+        document.getElementById("probability").innerHTML = `
+            <h3>Your flight has a <strong>${delay}</strong> chance of being canceled</h3>
+        `;
+
+        var delays = "";
+        if (airlineDelay > 0.5) delays += "High chance of airline delays<br />";
+        if (airportDelay > 0.5) delays += "High chance of airline delays<br />";
+        if (weatherDelay > 0.5) delays += "High chance of airline delays<br />";
+        if (monthDelay > 0.5) delays += "High chance of airline delays<br />";
+        
 
         document.getElementById("flightInfo").innerHTML = `
-            <p><strong>Flight:</strong> ${flight.flight.iata} (${flight.airline.name})</p>
-            <p><strong>From:</strong> ${flight.departure.airport} (${flight.departure.iata})</p>
-            <p><strong>To:</strong> ${flight.arrival.airport} (${flight.arrival.iata})</p>
-            <p><strong>Current:</strong> ${flight.flight_status}</p>
-            <p><strong>Flight Date:</strong> ${flight.flight_date || "N/A"}</p>
-            <p><strong>Scheduled Departure:</strong> ${flight.departure.scheduled || "N/A"}</p>
-            <p><strong>Arrival Delay:</strong> ${flight.arrival.delay || "No delay reported"}</p>
-            <p><strong>Risk of delay:</strong> ${calculateDelay()}</p>
-            <p><strong>Temp:</strong> ${currentFlight.temperature}</p>
-            <p><strong>Pre:</strong> ${currentFlight.precipitation}</p>
+
+            <h4>Your flight from ${currentFlight.departureAirport} to ${currentFlight.arrivalAirport} has a ${delay} chance of delay due to the following reasons:</h4>
+            ${delays}
         `;
     } catch (error) {
         console.error("Error fetching flight data:", error);
