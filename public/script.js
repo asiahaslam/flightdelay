@@ -136,6 +136,7 @@ function start() {
     let searchBar = document.getElementById("searchbar");
     searchBar.style.display='flex';
 }
+
 /* async function getWeather(dateTime, city) {
     try {
         // Get latitude and longitude from Open-Meteo Geocoding API
@@ -281,7 +282,7 @@ async function getFlightByNumber(flightNumber) {
         `;
 
         document.getElementsByClassName("progress").innerHTML = `
-            <div class="progress-bar bg-${color}" role="progressbar" style="width: ${delayPercent}" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+            <div class="progress-bar bg-${color}" role="progressbar" style="width: ${delayPercent}" aria-valuenow="${delay * 100}" aria-valuemin="0" aria-valuemax="100"></div>
         `;
 
     } catch (error) {
