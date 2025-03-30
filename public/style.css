@@ -26,7 +26,6 @@ body {
     }
 }
 
-/* <list> */
   #background {
     margin-top: 50px;
     margin: 0;
@@ -116,7 +115,6 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 2px 2px 4px grey;
     font-family: 'Montserrat';
    }
   
@@ -132,8 +130,9 @@ body {
     align-items: center;
     justify-content: center;
     margin-top: -50px;
-    transition: all .3s;
+    
 }
+
 
 
 #bar {
@@ -142,6 +141,7 @@ body {
     width: 34%; 
     background-color: grey;
     min-width: 500px;
+    visibility: visible;
 }
 
 input {
@@ -182,17 +182,12 @@ p {
     outline: none;
 }
 
-#searchicon:focus {
-    mix-blend-mode: soft-light;
-    border: 0px;
-    outline: none;
-}
 
 #userdata {
     text-align: center;
     height: 100%;
     min-height: 200px;
-    margin-top: -180px;
+    margin-top: -100px;
     align-items: center;
     flex-direction: column;
     display: none;
