@@ -184,7 +184,7 @@ function calculateDelay() {
     monthDelay = month ? month.delay : 0.0;
 
     let percentage = (0.85 * airlineDelay) + (0.05 * airportDelay) + (0.05 * weatherDelay) + (0.05 * monthDelay);
-    return (percentage * 100).toFixed(0) + "% chance of delay";
+    return percentage;
 }
 
 async function getFlightByNumber(flightNumber) {
@@ -217,6 +217,11 @@ async function getFlightByNumber(flightNumber) {
         );
 
         let delay = calculateDelay();
+        let delayPercent = (delay * 100).toFixed(0) + "%";
+        let delayRisk = "Low";
+        
+        if (delay > 0.3 && delay < 0.7) delayRisk = "Medium";
+        else if (delay >= 0.7) delayRisk = "High";
 
         console.log(currentFlight);
 
@@ -230,19 +235,34 @@ async function getFlightByNumber(flightNumber) {
         background.id = 'background-lower';
 
         document.getElementById("probability").innerHTML = `
-            <h3>Your flight has a <strong>${delay}</strong> chance of being canceled</h3>
+            <h3>Your flight has a <strong>${delayRisk}</strong> chance of being delayed</h3>
         `;
 
         var delays = "";
-        if (airlineDelay > 0.5) delays += "High chance of airline delays<br />";
-        if (airportDelay > 0.5) delays += "High chance of airline delays<br />";
-        if (weatherDelay > 0.5) delays += "High chance of airline delays<br />";
-        if (monthDelay > 0.5) delays += "High chance of airline delays<br />";
-        
+        var isDelayed = false;
+        var delayInfo = "";
+        if (airlineDelay > 0.5) {
+            delays += "High chance of airline delays<br />";
+            isDelayed = true;
+        }
+        if (airportDelay > 0.5) {
+            delays += "High chance of airline delays<br />";
+            isDelayed = true;
+        }
+        if (weatherDelay > 0.5) {
+            delays += "High chance of airline delays<br />";
+            isDelayed = true;
+        }
+        if (monthDelay > 0.5) {
+            delays += "High chance of airline delays<br />";
+            isDelayed = true;
+        }
 
-        document.getElementById("flightInfo").innerHTML = `
+        if (isDelayed == true) delayInfo += " due to the following reasons:";
 
-            <h4>Your flight from ${currentFlight.departureAirport} to ${currentFlight.arrivalAirport} has a ${delay} chance of delay due to the following reasons:</h4>
+        document.getElementById("delay-reasons").innerHTML = `
+
+            <h4>Your flight from ${currentFlight.departureAirport} to ${currentFlight.arrivalAirport} has a ${delayPercent} chance of delay${delayInfo}</h4>
             ${delays}
         `;
     } catch (error) {
