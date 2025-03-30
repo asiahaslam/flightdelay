@@ -208,15 +208,10 @@ async function getFlightByNumber(flightNumber) {
         console.log(currentFlight);
 
         let searchBar = document.getElementById("searchbar");
-        searchBar.style.opacity = '0';
-        window.setTimeout(
-            function removethis() {
-                searchBar.style.display='none';
-            }, 300);
-        if (searchBar) searchBar.id = "search-hidden";
+        searchBar.style.display='none';
 
-        let userData = document.getElementById("userdata-hidden");
-        if (userData) userData.id = "userdata";
+        let userData = document.getElementById("userdata");
+        userData.style.display='inherit';
 
         document.getElementById("flightInfo").innerHTML = `
             <p><strong>Flight:</strong> ${flight.flight.iata} (${flight.airline.name})</p>
