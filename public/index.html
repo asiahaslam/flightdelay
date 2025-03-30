@@ -9,21 +9,22 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <div id = "background"></div>
     <div>
         <div id="nav"> 
             <image style = "float: left;" src="images/flight.png" alt = "Logo" height="95%" />
             <div class = "title">
                 <h1 style = "text-transform: uppercase;">Flight on time</h1>
-                <h2> Aaaaaaaagh</h2>
+                <h2><i>Will my flight be delayed?</i></h2>
             </div>
         </div>
         <p></p>
 
-        <div style = "width: 100%; visibility: hidden;">
+        <div id = "startbutton" style = "width: 100%; visibility: hidden;">
             <button class="bg-primary">START</button>
         </div>
 
-        <div id = "searchbar" >
+        <div id = "searchbar">
             <div id = "bar" >
                 <input type="text" id="flightNumber" placeholder="Input your flight number (e.g., AA100)">
                 <button onclick="searchFlight()" id = "searchbutton" style = "background-color: transparent;">
@@ -32,6 +33,22 @@
                 <div id="flightInfo"></div>
             </div>
             <script src="script.js"></script>
+        </div>
+
+        <div id = "userdata" style = "visibility: hidden;">
+            <div class = "info-container" style = "width: 60%;">
+                <h3>Your flight has a <span id = "probability" style = "font-weight:bold"> 80% </span> chance of being cancelled. </h3>
+            </div>
+
+            <div class = "progress"></div>
+
+            <div class = "info-container">
+                <p>H</p><p></p><p></p>
+            </div>
+
+            <button id = "redobutton">
+                RETRY?
+            </button>
         </div>
 
     </div> 
