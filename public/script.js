@@ -219,9 +219,16 @@ async function getFlightByNumber(flightNumber) {
         let delay = calculateDelay();
         let delayPercent = (delay * 100).toFixed(0) + "%";
         let delayRisk = "Low";
+        let color = "success";
         
-        if (delay > 0.3 && delay < 0.7) delayRisk = "Medium";
-        else if (delay >= 0.7) delayRisk = "High";
+        if (delay > 0.3 && delay < 0.7) {
+            delayRisk = "Medium";
+            color = "warning";
+        }
+        else if (delay >= 0.7) {
+            delayRisk = "High";
+            color = "danger";
+        }
 
         console.log(currentFlight);
 
@@ -265,6 +272,11 @@ async function getFlightByNumber(flightNumber) {
             <h4>Your flight from ${currentFlight.departureAirport} to ${currentFlight.arrivalAirport} has a ${delayPercent} chance of delay${delayInfo}</h4>
             ${delays}
         `;
+
+        document.getElementsByClassName("progress").innerHTML = `
+            <div class="progress-bar bg-${color}" role="progressbar" style="width: ${delayPercent}" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+        `;
+
     } catch (error) {
         console.error("Error fetching flight data:", error);
     }
