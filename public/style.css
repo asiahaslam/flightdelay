@@ -135,13 +135,6 @@ body {
     transition: all .3s;
 }
 
-#search-hidden {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: -50px;
-}
-
 
 #bar {
     padding: 5px;
@@ -181,10 +174,18 @@ p {
     margin: 0;
     border: 0px;
     background-color: transparent;
+    outline: none;
 }
 
 #searchicon:hover {
-    mix-blend-mode: difference;
+    mix-blend-mode: soft-light;
+    outline: none;
+}
+
+#searchicon:focus {
+    mix-blend-mode: soft-light;
+    border: 0px;
+    outline: none;
 }
 
 #userdata {
