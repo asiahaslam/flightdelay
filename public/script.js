@@ -2,6 +2,7 @@ var currentFlight;
 var airports = [];
 var airlines = [];
 var weather = [];
+var months = [];
 
 class Airport {
     constructor(name, delayRate) {
@@ -25,20 +26,27 @@ class Weather {
 }
 
 class Flight {
-    constructor(flightNumber, airlineName, departureAirport, arrivalAirport, flightDay, currentStatus) {
+    constructor(flightNumber, airlineName, departureAirport, arrivalAirport, flightDate, currentStatus, monthName) {
         this.flightNumber = flightNumber;
         this.airlineName = airlineName;
         this.departureAirport = departureAirport;
         this.arrivalAirport = arrivalAirport;
-        this.flightDay = flightDay;
+        this.flightDate = flightDate;
         this.currentStatus = currentStatus;
-        this.temperature = 0;
-        this.weatherCode = 0;
+        this.weatherCode = getWeather();
+        this.monthName = monthName;
+    }
+}
+
+class Month {
+    constructor(name, delayRate) {
+        this.name = name;
+        this.delay = delayRate;
     }
 }
 
 function updateLists() {
-    airports.push(new Airport("Sofia", 0.96));
+    airports.push(new Airport("Sofia", 0.18));
     airports.push(new Airport("Athens", 0.60));
     airports.push(new Airport("Bucharest", 0.5771));
 
@@ -86,9 +94,26 @@ function updateLists() {
     weather.push(new Weather("Rain", 0.2));
     weather.push(new Weather("Snow", 0.4));
     weather.push(new Weather("Clear", 0.1));
+
+    months.push(new Month("01", 0.13));
+    months.push(new Month("02", 0.12));
+    months.push(new Month("03", 0.11));
+    months.push(new Month("04", 0.14));
+    months.push(new Month("05", 0.14));
+    months.push(new Month("06", 0.16));
+    months.push(new Month("07", 0.19));
+    months.push(new Month("08", 0.21));
+    months.push(new Month("09", 0.16));
+    months.push(new Month("10", 0.16));
+    months.push(new Month("11", 0.18));
+    months.push(new Month("12", 0.26));
 }
 
-async function getWeather(dateTime, city) {
+function getWeather() {
+    return Math.random();
+}
+
+/* async function getWeather(dateTime, city) {
     try {
         // Get latitude and longitude from Open-Meteo Geocoding API
         const geoResponse = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${city}&count=1&format=json`);
@@ -125,13 +150,14 @@ async function getWeather(dateTime, city) {
         console.error("Error fetching weather data:", error);
         alert("Error fetching weather data. Try again.");
     }
-}
+} */
 
 
-function calculate() {
+function calculateDelay() {
     let airlineDelay = 0.0;
     let airportDelay = 0.0;
     let weatherDelay = 0.0;
+    let monthDelay = 0.0;
 
     airlines.forEach(item => {
         if (item.name === currentFlight.airlineName) airlineDelay = item.delayRate;
@@ -141,18 +167,22 @@ function calculate() {
         if (item.name === currentFlight.departureAirport) airportDelay = item.delayRate;
     });
 
-    weather.forEach(item => {
-        if (item.type === "Rain") weatherDelay = 0.2;  
-    });
+    if (currentFlight.weatherCode < 50) weatherDelay = 0.1;
+    else if (currentFlight.weatherCode < 80) weatherDelay = 0.3;
+    else weatherDelay = 0.45;
 
-    let percentage = (0.90 * (1-airlineDelay)) + (0.5 * airportDelay) + (0.5 * weatherDelay);
+    months.forEach(item => {
+        if (item.name === currentFlight.monthName) monthDelay = item.delayRate;
+    });    
+
+    let percentage = (0.75 * (1-airlineDelay)) + (0.5 * airportDelay) + (0.5 * weatherDelay) + (0.5 * monthDelay);
     return (percentage * 100).toFixed(2) + "% chance of delay";
 }
 
 async function getFlightByNumber(flightNumber) {
     updateLists();
 
-    const API_KEY = "b82abca13196a291e88595833fdb3dbd"; // Replace with your actual key
+    const API_KEY = "f4da060f7bf36786afc535e0571e19c9";
     const url = `http://api.aviationstack.com/v1/flights?access_key=${API_KEY}&flight_iata=${flightNumber}`;
 
     try {
@@ -165,9 +195,8 @@ async function getFlightByNumber(flightNumber) {
         }
 
         var flight = data.data[0];
-
-        var dateTime = flight.flight_date;
-        var city = flight.departure.city;
+        var date = flight.flight_date;
+        var month = date.substring(5,7);
 
         currentFlight = new Flight(
             flight.flight.iata, 
@@ -175,10 +204,11 @@ async function getFlightByNumber(flightNumber) {
             flight.departure.airport, 
             flight.arrival.airport, 
             flight.flight_date, 
-            flight.flight_status
+            flight.flight_status,
+            month
         );
 
-        getWeather(dateTime, city);
+        console.log(currentFlight);
 
 
         document.getElementById("flightInfo").innerHTML = `
@@ -189,7 +219,7 @@ async function getFlightByNumber(flightNumber) {
             <p><strong>Flight Date:</strong> ${flight.flight_date || "N/A"}</p>
             <p><strong>Scheduled Departure:</strong> ${flight.departure.scheduled || "N/A"}</p>
             <p><strong>Arrival Delay:</strong> ${flight.arrival.delay || "No delay reported"}</p>
-            <p><strong>Risk of delay:</strong> ${calculate()}</p>
+            <p><strong>Risk of delay:</strong> ${calculateDelay()}</p>
             <p><strong>Temp:</strong> ${currentFlight.temperature}</p>
             <p><strong>Pre:</strong> ${currentFlight.precipitation}</p>
         `;
