@@ -159,24 +159,21 @@ function calculateDelay() {
     let weatherDelay = 0.0;
     let monthDelay = 0.0;
 
-    airlines.forEach(item => {
-        if (item.name === currentFlight.airlineName) airlineDelay = item.delayRate;
-    });
+    let airline = airlines.find(item => item.name === currentFlight.airlineName);
+    airlineDelay = airline ? 1 - airline.delayRate : 0.0;
 
-    airports.forEach(item => {
-        if (item.name === currentFlight.departureAirport) airportDelay = item.delayRate;
-    });
+    let airport = airports.find(item => item.name === currentFlight.departureAirport);
+    airportDelay = airport ? airport.delayRate : 0.0;
 
     if (currentFlight.weatherCode < 50) weatherDelay = 0.1;
     else if (currentFlight.weatherCode < 80) weatherDelay = 0.3;
     else weatherDelay = 0.45;
 
-    months.forEach(item => {
-        if (item.name === currentFlight.monthName) monthDelay = item.delayRate;
-    });    
+    let month = months.find(item => item.name === currentFlight.monthName);
+    monthDelay = month ? month.delay : 0.0;
 
-    let percentage = (0.75 * (1-airlineDelay)) + (0.5 * airportDelay) + (0.5 * weatherDelay) + (0.5 * monthDelay);
-    return (percentage * 100).toFixed(2) + "% chance of delay";
+    let percentage = (0.85 * airlineDelay) + (0.05 * airportDelay) + (0.05 * weatherDelay) + (0.05 * monthDelay);
+    return (percentage * 100).toFixed(0) + "% chance of delay";
 }
 
 async function getFlightByNumber(flightNumber) {
@@ -210,6 +207,16 @@ async function getFlightByNumber(flightNumber) {
 
         console.log(currentFlight);
 
+        let searchBar = document.getElementById("searchbar");
+        searchBar.style.opacity = '0';
+        window.setTimeout(
+            function removethis() {
+                searchBar.style.display='none';
+            }, 300);
+        if (searchBar) searchBar.id = "search-hidden";
+
+        let userData = document.getElementById("userdata-hidden");
+        if (userData) userData.id = "userdata";
 
         document.getElementById("flightInfo").innerHTML = `
             <p><strong>Flight:</strong> ${flight.flight.iata} (${flight.airline.name})</p>
